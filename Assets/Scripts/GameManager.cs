@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +9,9 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject _pauseMenu;
+    [SerializeField]
+    private TMP_Text _timerView;
+
 
     [SerializeField]
     private Player _player;
@@ -38,7 +42,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        pauseState = new PauseState(_pauseMenu, this);
+        pauseState = new PauseState(_pauseMenu, _timerView, this);
         runState = new RunState(this);
         deadState = new DeadState(this);
         waitToStartState = new WaitToStartState(this);

@@ -10,12 +10,28 @@ public class Spawner : MonoBehaviour
     [SerializeField]
     private Block _spawnPrefab;
 
+    [Header("Speed")]
     [SerializeField]
     private float _distanceBetweenBlock = 6;
     [SerializeField]
-    private float _blockSpeed = 3;
+    private float _maxSpeed;
+    public float MaxSpeed => _maxSpeed;
     [SerializeField]
-    private float _gapSize = 3;
+    private float _minSpeed;
+    public float MinSpeed => _minSpeed;
+    private float _blockSpeed;
+
+    public float BlockSpeed { get { return _blockSpeed; } set { UpdateSpeed(value); } }
+
+    [Header("Gap Size")]
+    [SerializeField]
+    private float _maxGapSize;
+    [SerializeField]
+    private float _minGapSize;
+    public float MinGapSize => _minGapSize;
+    public float MaxGapSize => _maxGapSize;
+    [HideInInspector]
+    public float GapSize = 3;
 
     private float _spawnRate = 1.7f;
 
@@ -24,7 +40,6 @@ public class Spawner : MonoBehaviour
     public ReadOnlyCollection<Block> BlockList => _blockList.AsReadOnly();
 
     private float _leftEdge, _rightEdge, _height;
-    public float LeftEdge => _leftEdge;
 
     private void Start()
     {
@@ -32,7 +47,8 @@ public class Spawner : MonoBehaviour
         _leftEdge = mainCamera.ViewportToWorldPoint(Vector3.zero).x - 1f;
         _rightEdge = mainCamera.ViewportToWorldPoint(new Vector3(1,0,0)).x + 1f;
         _height = mainCamera.orthographicSize;
-        UpdateSpeed(_blockSpeed);
+        BlockSpeed = _minSpeed;
+        GapSize = _maxGapSize;
     }
 
 
@@ -61,23 +77,25 @@ public class Spawner : MonoBehaviour
     }
     private void UpdateSpeed(float speed)
     {
+        speed = Mathf.Clamp(speed, _minSpeed, _maxSpeed);
         _spawnRate = _distanceBetweenBlock / speed;
         _blockSpeed = speed;
     }
 
+    private float _yPrevPos = 0;
     private void Spawn()
     {
-        var posLimit = _height - _gapSize * .5f;
-        var yPos = Random.Range(-posLimit, posLimit);
-
-        CreateBlock(yPos, _gapSize);
+        GapSize = Mathf.Clamp(GapSize, _minGapSize, _maxGapSize);
+        var yPos = _yPrevPos + Random.Range(-2.0f, 2.0f);
+        _yPrevPos = Mathf.Clamp(yPos, -_height + GapSize, +_height - GapSize);
+        CreateBlock(yPos, GapSize);
     }
 
     private void Update()
     {
         foreach (var block in BlockList)
         {
-            if (block.transform.position.x <= LeftEdge)
+            if (block.transform.position.x <= _leftEdge)
             {
                 block.DestroyObject();
                 continue;

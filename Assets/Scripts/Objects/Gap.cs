@@ -6,6 +6,7 @@ public class Gap : ObjectBase
 {
     public override void Collide(Player player)
     {
-        Score.Instance.Add(1);
+        if(GameManager.Instance.runState.isActive)
+            Score.Instance.Add(1);
     }
 }
