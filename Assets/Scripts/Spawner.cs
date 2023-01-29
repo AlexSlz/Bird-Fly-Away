@@ -8,14 +8,17 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     [SerializeField]
-    private float _distanceBetweenBlock = 6;
+    private Block _spawnPrefab;
 
+    [SerializeField]
+    private float _distanceBetweenBlock = 6;
     [SerializeField]
     private float _blockSpeed = 3;
     [SerializeField]
     private float _gapSize = 3;
 
     private float _spawnRate = 1.7f;
+
     [SerializeField]
     private List<Block> _blockList = new List<Block>();
     public ReadOnlyCollection<Block> BlockList => _blockList.AsReadOnly();
@@ -94,7 +97,7 @@ public class Spawner : MonoBehaviour
         var disabledObjects = GetDisabledObjects();
         if (disabledObjects.Count() <= 0)
         {
-            temp = Instantiate(GameAssets.Instance.BlockPrefab, this.transform);
+            temp = Instantiate(_spawnPrefab, this.transform);
             _blockList.Add(temp);
         }
         else

@@ -8,6 +8,7 @@ public class Pipe : ObjectBase
     {
         var direction = player.gameObject.transform.position.x <= this.transform.position.x;
         player.RigidBody.velocity = new Vector3((direction) ? -3 : 3, 4, 0);
-        player.Dead();
+        this.GetComponentInParent<Spawner>().enabled = false;
+        GameManager.Instance.SetState(GameManager.Instance.deadState);
     }
 }

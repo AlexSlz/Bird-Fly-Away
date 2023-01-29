@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(CircleCollider2D))]
@@ -7,6 +5,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField]
     private FlappyMove _movement = new FlappyMove();
+    public void Move() => _movement.Move(_rigidbody);
 
     private Rigidbody2D _rigidbody;
     public Rigidbody2D RigidBody => _rigidbody;
@@ -16,13 +15,6 @@ public class Player : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
-        {
-            _movement.Move(_rigidbody);
-        }
-    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent<ObjectBase>(out var myObject))
@@ -30,10 +22,4 @@ public class Player : MonoBehaviour
             myObject.Collide(this);
         }
     }
-
-    public void Dead()
-    {
-        GameManager.Instance.Pause();
-    }
-
 }

@@ -19,7 +19,4 @@ public class GameAssets : MonoBehaviour
         }
     }
 
-    [SerializeField]
-    private Block _blockPrefab;
-    public Block BlockPrefab => _blockPrefab;
 }

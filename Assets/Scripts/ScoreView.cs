@@ -6,6 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(TMP_Text))]
 public class ScoreView : MonoBehaviour
 {
+    [SerializeField]
+    private Score _score;
     private TMP_Text _scoreView;
 
     private void Awake()
@@ -15,7 +17,8 @@ public class ScoreView : MonoBehaviour
 
     private void Start()
     {
-        Score.Instance.OnScoreChanged += SetScore;
+        if(_score != null)
+        _score.OnScoreChanged += SetScore;
     }
     private void SetScore(int score)
     {
