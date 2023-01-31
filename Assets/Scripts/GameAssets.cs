@@ -19,4 +19,13 @@ public class GameAssets : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        Camera.main.backgroundColor = ColorPalette.BackgroundColor;
+    }
+
+    [SerializeField]
+    private ColorPalette _colorPalette;
+    public ColorPalette ColorPalette => _colorPalette;
+
 }

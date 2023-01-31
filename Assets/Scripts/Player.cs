@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
+        this.GetComponent<SpriteRenderer>().color = GameAssets.Instance.ColorPalette.PlayerColor;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

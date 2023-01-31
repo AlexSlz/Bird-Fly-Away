@@ -12,6 +12,13 @@ public class Block : MonoBehaviour
     [SerializeField]
     private Transform _gapObject;
 
+    private void Start()
+    {
+        Color mainColor = GameAssets.Instance.ColorPalette.BlockColor;
+        _topObject.GetComponent<SpriteRenderer>().color = mainColor;
+        _bottomObject.GetComponent<SpriteRenderer>().color = mainColor;
+    }
+
     public void ChangeGapSize(float gapSize)
     {
         _gapObject.localScale = new Vector3(this._gapObject.localScale.x, gapSize);

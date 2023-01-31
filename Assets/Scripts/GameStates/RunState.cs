@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class RunState : BaseGameState
 {
-    public RunState(GameManager parent) : base(parent)
+    private TMP_Text _helpText;
+    public RunState(TMP_Text helpText, GameManager parent) : base(parent)
     {
+        _helpText = helpText;
     }
 
     public override void EndState()
@@ -18,5 +21,6 @@ public class RunState : BaseGameState
     {
         base.EnterState();
         InputManager.Instance.onPressJump += parent.Player.Move;
+        _helpText.enabled = false;
     }
 }

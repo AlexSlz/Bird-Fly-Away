@@ -17,6 +17,7 @@ public class ScoreView : MonoBehaviour
 
     private void Start()
     {
+        _scoreView.color = GameAssets.Instance.ColorPalette.InterfaceColor;
         if(_score != null)
         _score.OnScoreChanged += SetScore;
     }

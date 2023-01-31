@@ -27,7 +27,6 @@ public class Score : MonoBehaviour
     public void Add(int count)
     {
         _score += count;
-        Debug.Log(_score);
         OnScoreChanged?.Invoke(_score);
     }
 }

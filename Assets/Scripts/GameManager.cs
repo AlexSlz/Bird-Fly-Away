@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     private GameObject _pauseMenu;
     [SerializeField]
     private TMP_Text _timerView;
+    [SerializeField]
+    private TMP_Text _helpText;
 
 
     [SerializeField]
@@ -43,11 +45,14 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         pauseState = new PauseState(_pauseMenu, _timerView, this);
-        runState = new RunState(this);
+        runState = new RunState(_helpText, this);
         deadState = new DeadState(this);
         waitToStartState = new WaitToStartState(this);
         SetState(waitToStartState);
         InputManager.Instance.onPressPause += onPressPause;
+
+        _timerView.color = GameAssets.Instance.ColorPalette.InterfaceColor;
+        _helpText.color = GameAssets.Instance.ColorPalette.InterfaceColor;
     }
 
     private void onPressPause()
